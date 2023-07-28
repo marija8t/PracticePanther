@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Assignment2.MAUI.Views.BillList"
+             Title="BillList"
+             NavigatedTo="OnArriving">
+    <VerticalStackLayout>
+        <Label Text="Bills: "/>
+        <ListView
+            ItemsSource="{Binding Client.Bills}"
+            >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="12*"/>
+                                </Grid.ColumnDefinitions>
+                            
+                            <Label Grid.Column="0" VerticalTextAlignment="Center" Text="{Binding Display}"></Label>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Text="Go Back" Clicked="GoBackClicked"/>
+    </VerticalStackLayout>
+</ContentPage>

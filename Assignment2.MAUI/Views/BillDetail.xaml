@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Assignment2.MAUI.Views.BillDetail"
+             Title="BillDetail"
+             NavigatedTo="OnArriving">
+    <VerticalStackLayout>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="Input Due Date"  HorizontalOptions="Center" />
+            <DatePicker Grid.Row="1" Date="{Binding SelectedDate}" HorizontalOptions="Center" />
+
+
+            <Button Grid.Row="2"
+                Text="Calculate Total Amount"
+                Command="{Binding CalculateAmountCommand}"
+                HorizontalOptions="CenterAndExpand"
+            ></Button>
+        </Grid>
+
+    
+
+
+
+
+<ListView ItemsSource="{Binding Times}">
+    <ListView.ItemTemplate>
+        <DataTemplate>
+            <ViewCell>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="11*"/>
+                        <ColumnDefinition/>
+                  </Grid.ColumnDefinitions>
+            
+                  <Label Grid.Column="0"  Text="{Binding Path=Display}"/>
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+    </ListView.ItemTemplate>
+</ListView>
+
+
+        <Button Text="Go Back" Clicked="GoBackClicked"/>
+    </VerticalStackLayout>
+</ContentPage>
