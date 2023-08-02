@@ -7,7 +7,7 @@
     <VerticalStackLayout>
         <Label Text="Bills: "/>
         <ListView
-            ItemsSource="{Binding Client.Bills}"
+            ItemsSource="{Binding Bills}"
             >
             <ListView.ItemTemplate>
                 <DataTemplate>

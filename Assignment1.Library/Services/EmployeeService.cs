@@ -1,6 +1,9 @@
 ﻿using System;
 using Assignment1.Library.Models;
 using Assignment1.Models;
+using Newtonsoft.Json;
+
+using Assignment1.Library.Utilities;
 
 namespace Assignment1.Library.Services
 {
@@ -10,11 +13,16 @@ namespace Assignment1.Library.Services
         {
             get
             {
-                return employees;
+                var response = new WebRequestHandler()
+                    .Get("/Employee/GetEmployees")
+                    .Result;
+                var employees = JsonConvert
+                    .DeserializeObject<List<Employee>>(response);
+                return employees ?? new List<Employee>();
             }
         }
 
-        private List<Employee> employees;
+        //private List<Employee> employees;
 
         private static EmployeeService? instance;
 
@@ -40,20 +48,20 @@ namespace Assignment1.Library.Services
 
         private EmployeeService()
         {
-            employees = new List<Employee>
-            {
-                new Employee{ Id = 1, Name = "Mary Jane", Rate = 20}, 
-                new Employee{ Id = 2, Name = "Bob Burgers", Rate = 20},
-                new Employee{ Id = 3, Name = "Lisa"},
-                new Employee{ Id = 4, Name = "John Smith"},
-                new Employee{ Id = 5, Name = "Tammy"},
-                new Employee{ Id = 6, Name = "Gene"},
-                new Employee{ Id = 7, Name = "Marija"}
-            };
+            //employees = new List<Employee>
+            //{
+            //    new Employee{ Id = 1, Name = "Mary Jane", Rate = 20},
+            //    new Employee{ Id = 2, Name = "Bob Burgers", Rate = 20},
+            //    new Employee{ Id = 3, Name = "Lisa"},
+            //    new Employee{ Id = 4, Name = "John Smith"},
+            //    new Employee{ Id = 5, Name = "Tammy"},
+            //    new Employee{ Id = 6, Name = "Gene"},
+            //    new Employee{ Id = 7, Name = "Marija"}
+            //};
         }
 
 
-//------------------------------------IDFunctions------------------------------------------------------
+        //------------------------------------IDFunctions------------------------------------------------------
         public Employee? Get(int id)
         {
             return Employees.FirstOrDefault(e => e.Id == id);
