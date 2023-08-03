@@ -15,9 +15,11 @@
 
   <ItemGroup>
     <None Remove="Database\" />
+    <None Remove="EC\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Database\" />
+    <Folder Include="EC\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Assignment1.Library">

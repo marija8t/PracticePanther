@@ -9,15 +9,12 @@ namespace Assignment1.Library.Services
 {
 	public class EmployeeService
 	{
+        private List<Employee> employees = new List<Employee>();
+
         public List<Employee> Employees
         {
             get
             {
-                var response = new WebRequestHandler()
-                    .Get("/Employee/GetEmployees")
-                    .Result;
-                var employees = JsonConvert
-                    .DeserializeObject<List<Employee>>(response);
                 return employees ?? new List<Employee>();
             }
         }
@@ -48,23 +45,24 @@ namespace Assignment1.Library.Services
 
         private EmployeeService()
         {
-            //employees = new List<Employee>
-            //{
-            //    new Employee{ Id = 1, Name = "Mary Jane", Rate = 20},
-            //    new Employee{ Id = 2, Name = "Bob Burgers", Rate = 20},
-            //    new Employee{ Id = 3, Name = "Lisa"},
-            //    new Employee{ Id = 4, Name = "John Smith"},
-            //    new Employee{ Id = 5, Name = "Tammy"},
-            //    new Employee{ Id = 6, Name = "Gene"},
-            //    new Employee{ Id = 7, Name = "Marija"}
-            //};
+            var response = new WebRequestHandler()
+                .Get("/Employee")
+                .Result;
+            employees = JsonConvert
+                .DeserializeObject<List<Employee>>(response) ?? new List<Employee>();
+        
         }
 
 
         //------------------------------------IDFunctions------------------------------------------------------
         public Employee? Get(int id)
         {
-            return Employees.FirstOrDefault(e => e.Id == id);
+            //var response = new WebRequestHandler()
+            //    .Get($"/Employee/GetEmployees/{id}")
+            //    .Result;
+            //var employee = JsonConvert
+            //        .DeserializeObject<Employee>(response);
+            return employees.FirstOrDefault(e => e.Id == id);
         }
 
         private int LastId
@@ -78,6 +76,7 @@ namespace Assignment1.Library.Services
 //------------------------------------DELETE------------------------------------------------------
         public void Delete(int id)
         {
+            //as webrequesthandler
             var employeeToDelete = Employees.FirstOrDefault(e => e.Id == id);
             if (employeeToDelete != null)
             {
@@ -88,13 +87,23 @@ namespace Assignment1.Library.Services
 //------------------------------------ADD/EDIT------------------------------------------------------
         public void AddOrUpdate(Employee e)
         {
-            if (e.Id == 0)
-            {
-                //add
-                e.Id = LastId + 1;
-                Employees.Add(e);
-            }
+            var response = new WebRequestHandler().Post("/Employee", e).Result;
 
+            var myUpdatedEmployee = JsonConvert.DeserializeObject<Employee>(response);
+            if (myUpdatedEmployee != null)
+            {
+                var existingEmployee = employees.FirstOrDefault(c => c.Id == myUpdatedEmployee.Id);
+                if (existingEmployee == null)
+                {
+                    employees.Add(myUpdatedEmployee);
+                }
+                else
+                {
+                    var index = employees.IndexOf(existingEmployee);
+                    employees.RemoveAt(index);
+                    employees.Insert(index, myUpdatedEmployee);
+                }
+            }
         }
 
     }

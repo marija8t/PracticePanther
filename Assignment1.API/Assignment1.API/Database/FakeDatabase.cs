@@ -1,5 +1,6 @@
 ﻿using System;
 using Assignment1.Library.Models;
+using Assignment1.Models;
 
 namespace Assignment1.API.Database
 {
@@ -16,7 +17,10 @@ namespace Assignment1.API.Database
                 new Employee{ Id = 7, Name = "Marija"}
 
         };
-    
-	}
+
+        public static int LastEmployeeId
+            => Employees.Any() ? Employees.Select(c => c.Id).Max() : 0;
+
+    }
 }
 

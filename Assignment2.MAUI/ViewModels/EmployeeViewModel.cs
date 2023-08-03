@@ -42,14 +42,13 @@ namespace Assignment2.MAUI.ViewModels
 
         public EmployeeViewModel(int employeeId)
         {
-            if (employeeId == 0)
+            if (employeeId > 0)
             {
-                Model = new Employee();
+                Model = EmployeeService.Current.Get(employeeId);
             }
             else
             {
-                Model = EmployeeService.Current.Get(employeeId);
-
+                Model = new Employee();
             }
             SetupCommands();
         }
