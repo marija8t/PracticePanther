@@ -1,7 +1,10 @@
 ﻿using System;
 using Assignment1.API.Database;
 using Assignment1.API.EC;
+using Assignment1.Library.DTO;
 using Assignment1.Library.Models;
+using Assignment1.Library.Utilities;
+using Assignment1.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Assignment1.API.Controllers
@@ -21,32 +24,34 @@ namespace Assignment1.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Employee> Get()
+        public IEnumerable<EmployeeDTO> Get()
         {
-            return FakeDatabase.Employees;
+            return new EmployeeEC().Search();
         }
 
         [HttpGet("/{id}")]
-        public Employee GetId(int id)
+        public EmployeeDTO? GetId(int id)
         {
-            return FakeDatabase.Employees.FirstOrDefault(e => e.Id == id) ?? new Employee();
+            return new EmployeeEC().Get(id);
         }
 
         [HttpDelete("Delete/{Id}")]
-        public Employee? Delete(int id)
+        public EmployeeDTO? Delete(int id)
         {
-            var employeeToDelete = FakeDatabase.Employees.FirstOrDefault(e => e.Id == id);
-            if(employeeToDelete != null)
-            {
-                FakeDatabase.Employees.Remove(employeeToDelete);
-            }
-            return employeeToDelete;
+            return new EmployeeEC().Delete(id);
         }
 
         [HttpPost]
-        public Employee AddOrUpdate([FromBody] Employee employee)
+        public EmployeeDTO AddOrUpdate([FromBody] EmployeeDTO employee)
         {
             return new EmployeeEC().AddOrUpdate(employee);
+        }
+
+        [HttpPost("Search")]
+        public IEnumerable<EmployeeDTO> Search([FromBody]QueryMessage query)
+        {
+            return new EmployeeEC().Search(query.Query);
+           
         }
     }
 }

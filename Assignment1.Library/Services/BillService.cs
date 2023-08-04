@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using Assignment1.Library.DTO;
 using Assignment1.Library.Models;
 using Assignment1.Models;
 
@@ -85,7 +86,8 @@ namespace Assignment1.Library.Services
 
             foreach (var timeEntry in timeEntries)
             {
-                Employee employee = GetEmployeeById(timeEntry.EmployeeId);
+                //changed from Employee to EmployeeDTO
+                EmployeeDTO employee = GetEmployeeById(timeEntry.EmployeeId);
                 if (employee != null)
                 {
                     totalAmount += timeEntry.Hours * employee.Rate;
@@ -97,7 +99,8 @@ namespace Assignment1.Library.Services
             return totalAmount;
         }
 
-        private Employee GetEmployeeById(int employeeId)
+        //changed from private Employee to EmployeeDTO
+        private EmployeeDTO GetEmployeeById(int employeeId)
         {
             
             return EmployeeService.Current.Get(employeeId);

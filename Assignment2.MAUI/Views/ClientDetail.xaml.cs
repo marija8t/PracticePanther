@@ -63,10 +63,12 @@ public partial class ClientDetail : ContentPage
     void BillListClicked(System.Object sender, System.EventArgs e)
     {
         //Shell.Current.GoToAsync("//BillList");
+        //////
         int clientId = (BindingContext as ClientViewModel).Model.Id;
-        int projectId = (BindingContext as ClientViewModel).Model.ProjectId.Id;
+        //int projectId = (BindingContext as ClientViewModel).Model.ProjectId.Id;
 
-        Shell.Current.GoToAsync($"//BillList?clientId={clientId}&projectId={projectId}");
+        Shell.Current.GoToAsync($"//BillList?clientId={clientId}");
+   
 
     }
 }

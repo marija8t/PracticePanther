@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Assignment1.Library.DTO;
 using Assignment1.Library.Models;
 using Assignment1.Library.Services;
 using Assignment1.Models;
@@ -13,8 +14,8 @@ namespace Assignment2.MAUI.ViewModels
 	{
 
         public Time Model { get; set; }
-        private Employee employee;
-        public Employee Employee
+        private EmployeeDTO employee;
+        public EmployeeDTO Employee
         {
             get
             {
@@ -73,8 +74,8 @@ namespace Assignment2.MAUI.ViewModels
         }
         public string ProjectDisplay => Project?.ShortName ?? string.Empty;
 
-        public ObservableCollection<Employee> Employees
-            => new ObservableCollection<Employee>(EmployeeService.Current.Employees);
+        public ObservableCollection<EmployeeDTO> Employees
+            => new ObservableCollection<EmployeeDTO>(EmployeeService.Current.Employees);
         public ObservableCollection<Project> Projects
             => new ObservableCollection<Project>(ProjectService.Current.Projects);
         public TimeViewModel()

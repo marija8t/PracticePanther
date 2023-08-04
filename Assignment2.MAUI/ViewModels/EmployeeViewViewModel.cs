@@ -13,7 +13,7 @@ namespace Assignment2.MAUI.ViewModels
     {
         private Employee SelectedEmployee { get; set; }
 
-
+        //mayybe add rate
         public ObservableCollection<EmployeeViewModel> Employees
         {
             get

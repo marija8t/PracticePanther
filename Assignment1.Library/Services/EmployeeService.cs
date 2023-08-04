@@ -4,18 +4,19 @@ using Assignment1.Models;
 using Newtonsoft.Json;
 
 using Assignment1.Library.Utilities;
+using Assignment1.Library.DTO;
 
 namespace Assignment1.Library.Services
 {
 	public class EmployeeService
 	{
-        private List<Employee> employees = new List<Employee>();
+        private List<EmployeeDTO> employees;
 
-        public List<Employee> Employees
+        public List<EmployeeDTO> Employees
         {
             get
             {
-                return employees ?? new List<Employee>();
+                return employees ?? new List<EmployeeDTO>();
             }
         }
 
@@ -48,35 +49,26 @@ namespace Assignment1.Library.Services
             var response = new WebRequestHandler()
                 .Get("/Employee")
                 .Result;
+
             employees = JsonConvert
-                .DeserializeObject<List<Employee>>(response) ?? new List<Employee>();
+                .DeserializeObject<List<EmployeeDTO>>(response)
+                ?? new List<EmployeeDTO>();
         
         }
 
 
-        //------------------------------------IDFunctions------------------------------------------------------
-        public Employee? Get(int id)
+//------------------------------------IDFunctions------------------------------------------------------
+        public EmployeeDTO? Get(int id)
         {
-            //var response = new WebRequestHandler()
-            //    .Get($"/Employee/GetEmployees/{id}")
-            //    .Result;
-            //var employee = JsonConvert
-            //        .DeserializeObject<Employee>(response);
+
             return employees.FirstOrDefault(e => e.Id == id);
         }
 
-        private int LastId
-        {
-            get
-            {
-                return Employees.Any() ? Employees.Select(e => e.Id).Max() : 0;
-            }
-        }
 
 //------------------------------------DELETE------------------------------------------------------
         public void Delete(int id)
         {
-            //as webrequesthandler
+            var response = new WebRequestHandler().Delete($"/Employee/Delete/{id}").Result;
             var employeeToDelete = Employees.FirstOrDefault(e => e.Id == id);
             if (employeeToDelete != null)
             {
@@ -85,11 +77,11 @@ namespace Assignment1.Library.Services
         }
 
 //------------------------------------ADD/EDIT------------------------------------------------------
-        public void AddOrUpdate(Employee e)
+        public void AddOrUpdate(EmployeeDTO e)
         {
             var response = new WebRequestHandler().Post("/Employee", e).Result;
 
-            var myUpdatedEmployee = JsonConvert.DeserializeObject<Employee>(response);
+            var myUpdatedEmployee = JsonConvert.DeserializeObject<EmployeeDTO>(response);
             if (myUpdatedEmployee != null)
             {
                 var existingEmployee = employees.FirstOrDefault(c => c.Id == myUpdatedEmployee.Id);
@@ -106,6 +98,13 @@ namespace Assignment1.Library.Services
             }
         }
 
+//--------------------------------------------SEARCH------------------------------------------------------
+        public IEnumerable<EmployeeDTO> Search(string query)
+        {
+            return Employees
+                .Where(c => c.Name.ToUpper()
+                    .Contains(query.ToUpper()));
+        }
     }
 }
 

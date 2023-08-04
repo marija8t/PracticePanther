@@ -3,7 +3,15 @@ namespace Assignment1.Library.Utilities
 {
 	public class QueryMessage
 	{
-		public string Query { get; set; }
-	}
+        private string? query;
+        public string Query
+        {
+            get => query ?? string.Empty;
+            set
+            {
+                query = value;
+            }
+        }
+    }
 }
 

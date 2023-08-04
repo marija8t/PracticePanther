@@ -31,7 +31,7 @@ public partial class ProjectDetailView : ContentPage
        
    
         BindingContext = new ProjectViewModel(ClientId, ProjectId);
-        
+        //(BindingContext as TimeViewViewModel).RefreshTimes();
 
     }
 
@@ -58,7 +58,7 @@ public partial class ProjectDetailView : ContentPage
         int projectId = (BindingContext as ProjectViewModel).Model.Id;
 
 
-        // Pass the filtered time entries to the BillDetail view
+        //// Pass the filtered time entries to the BillDetail view
         Shell.Current.GoToAsync($"//BillDetail?projectId={projectId}");
     }
 

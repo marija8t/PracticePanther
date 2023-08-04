@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using Assignment1.Library.DTO;
 using Assignment1.Library.Models;
 using Assignment1.Library.Services;
 using Assignment1.Models;
@@ -8,7 +9,7 @@ namespace Assignment2.MAUI.ViewModels
 {
 	public class EmployeeViewModel
 	{
-        public Employee Model { get; set; }
+        public EmployeeDTO Model { get; set; }
 
         public string Display
         {
@@ -18,7 +19,7 @@ namespace Assignment2.MAUI.ViewModels
             }
         }
 
-        public EmployeeViewModel(Employee employee)
+        public EmployeeViewModel(EmployeeDTO employee)
         {
             Model = employee;
             SetupCommands();
@@ -48,7 +49,7 @@ namespace Assignment2.MAUI.ViewModels
             }
             else
             {
-                Model = new Employee();
+                Model = new EmployeeDTO();
             }
             SetupCommands();
         }
@@ -60,7 +61,7 @@ namespace Assignment2.MAUI.ViewModels
 
         public EmployeeViewModel()
         {
-            Model = new Employee();
+            Model = new EmployeeDTO();
             SetupCommands();
         }
 

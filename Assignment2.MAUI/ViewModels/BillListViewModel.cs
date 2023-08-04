@@ -30,6 +30,7 @@ namespace Assignment2.MAUI.ViewModels
         public BillListViewModel(int clientId)
         {
             this.clientId = clientId;
+            LoadBills();
         }
 
         private void LoadBills()
